@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<link href="https://fonts.googleapis.com/css?family=Fjalla+One|Montserrat|Mukta+Malar" rel="stylesheet">
+<title>Pie Chart - Book Eloquent Javascript</title>
+</head>
+<body>
+
+<canvas width="400" height="300"></canvas>
+
+<script>
+                
+    const results = [
+        { name: "Satisfied", count: 1043, color: "lightblue" },
+        { name: "Neutral", count: 563, color: "lightgreen" },
+        { name: "Unsatisfied", count: 510, color: "pink" },
+        { name: "No comment", count: 175, color: "silver" },
+    ]
+
+    let cx = document.querySelector("canvas").getContext("2d");
+
+
+    let total = 0;
+    for(let i =  0; i < results.length; i++){
+        total += results[i].count;
+    }
+    
+    
+    let partial = 0;
+    let startAngle = -0.5 * Math.PI;
+    for (let i = 0; i < results.length; i++) {
+        partial = results[i].count;
+        let slice = (partial / total) * (2 * Math.PI);
+
+        cx.beginPath();
+        cx.arc(100, 100, 100, startAngle, startAngle + slice);
+        startAngle += slice;
+        cx.lineTo(100,100);//line to center filling empty space in middle
+        cx.fillStyle = results[i].color;
+        cx.fill();
+        cx.closePath();
+
+        cx.font = ("23px Mukta Malar");
+        cx.fillStyle = "Yellowgreen";
+        cx.fillText("Graph with customer satisfaction", 10, 240);
+
+        switch(startAngle){
+            case 1:  startAngle >= partial;          
+                cx.font = ("23px Mukta Malar");
+                cx.fillStyle = "Yellowgreen";
+                cx.fillText("Satisfied", startAngle, 240);console.log("reached");
+                
+            break;
+        }
+      
+    }
+
+</script>
+</body>
+</html>
